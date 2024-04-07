@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Servy - Create a booking v0</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@capitec/omni-components@esm/dist/omni-components.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  </head>
+
+  <body>
+
+    <div style="display: flex; justify-content: center; margin-top: 40px;">
+      <div style="width: 400px;">
+        <div id="P_SETUP">
+          <div style="background-color: #FFF; min-height: 500px;">
+            <div class="pageTitle">
+              <span class="pageTitle-clear">&#60;</span>
+              <span>Your Bookings</span>
+              <span class="pageTitle-clear">></span>
+            </div>
+            <div class="pageBox">
+              <div style="display: flex; justify-content: center; margin-top: 20px;">
+                <div style="width: 120px; height: 150px; background: #f6f6f6; border-radius: 7px; margin-bottom: 40px;">
+                </div>
+              </div>
+              <div class="center" style="">
+                <div>Amount that will be billed</div>
+                <div id="flowTotalCoverMsg">R0.00</div>
+              </div>
+              <span>
+                <label class="field-label">Subscription (Per Month)</label>
+                <input class="field" id="flowInput-monthly" onkeyup="validateFlowData()" />
+              </span>
+              <span>
+                <label class="field-label">Just once</label>
+                <input class="field" id="flowInput-onceOff" onkeyup="validateFlowData()" />
+              </span>
+              <span>
+                <label class="field-label">Fund Requests</label>
+                <input class="field" id="flowInput-education" onkeyup="validateFlowData()" />
+              </span>
+            </div>
+          </div>
+
+          <button class="capi-button mt-1" id="startFlowButton" onclick="goToPage('#P_INFO')" disabled>
+            NEXT
+          </button>
+        </div>
+
+        <div id="P_INFO" class="pageBlock">
+          <div style="background-color: #FFF; min-height: 500px;">
+            <div class="pageTitle">
+              <span class="pageTitle-back" onclick="goToPage('#P_SETUP')">&#60;</span>
+              <span>Buyer_Provider_relation</span>
+              <span class="pageTitle-clear">></span>
+            </div>
+            <div class="pageBox">
+              <div style="display: flex; justify-content: center; margin-top: 20px;">
+                <div style="width: 120px; height: 180px; background: #f6f6f6; border-radius: 7px;"></div>
+              </div>
+              <p class="center"><b>You have no bookings</b></p>
+              <p class="center">Filter by service category, and await service providers confimration. Please follow booking procedure</p>
+              <p class="center"><b>Servy , Anything you service you can think</b></p>
+            </div>
+          </div>
+          <button class="capi-button mt-1" onclick="goToPage('#P_MONTHLY')">
+            NEXT
+          </button>
+        </div>
+
+        <!-- Monthly -->
+        <div id="P_MONTHLY" class="pageBlock">
+          <div style="background-color: #FFF; ">
+            <div class="pageTitle">
+              <span class="pageTitle-back" onclick="goToPage('#P_INFO')">&#60;</span>
+              <span>Subscription</span>
+              <span class="pageTitle-clear">></span>
+            </div>
+            <div class="pageBox">
+              <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                <div style="width: 120px; height: 120px; background: #f6f6f6; border-radius: 7px;"></div>
+              </div>
+              <div class="center"><b>Subscription</b></div>
+
+              <div style="display: flex; justify-content: space-around; padding-bottom: 10px;" class="mt-1 mb-1">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <div>Available</div>
+                  <div><b id="calcMonthlyAvailable">R0.00</b></div>
+                  <div><b>pm for 24 months</b></div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <div>Remaining</div>
+                  <div><b id="calcMonthlyRemaining">R0.00</b></div>
+                  <div><b>pm for 24 months</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #f6f6f6;" class="mb-1 mt-1">
+            <b>Service pro list for the next 2 years</b> (Budget for 2 pro's)
+          </div>
+
+          <!-- Beneficiary List -->
+          <div id="beneficiaryListContainer-monthly">
+
+          </div>
+
+          <button class="capi-button-clear mt-1" id="monthlyAddBeneButton" onclick="goToAddBeneficiary('#P_MONTHLY')">
+            Assign services
+          </button>
+
+          <div id="beneficiaryQuickListContainer-monthly" style="display: none;">
+            <div style="background-color: #f6f6f6;" class="mb-1 mt-1">
+              <b>Or choose and existing beneficiary</b>
+            </div>
+
+            <!-- Beneficiary List Existing -->
+            <div id="beneficiaryListContainer-monthly-quick-select">
+
+            </div>
+          </div>
+
+          <button class="capi-button mt-1" style="display: none;" id="monthlyNextButton" onclick="goToPage('#P_ONCEOFF')">
+            NEXT
+          </button>
+        </div>
+
+        <!-- Once Off -->
+        <div id="P_ONCEOFF" class="pageBlock">
+          <div style="background-color: #FFF; ">
+            <div class="pageTitle">
+              <span class="pageTitle-back" onclick="goToPage('#P_MONTHLY')">&#60;</span>
+              <span>Just once</span>
+              <span class="pageTitle-clear">></span>
+            </div>
+            <div class="pageBox">
+              <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                <div style="width: 120px; height: 120px; background: #f6f6f6; border-radius: 7px;"></div>
+              </div>
+              <div class="center"><b>Just one singular payment</b></div>
+
+              <div style="display: flex; justify-content: space-around; padding-bottom: 10px;" class="mt-1 mb-1">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <div>Available</div>
+                  <div><b id="calcOnceOffAvailable">R0.00</b></div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <div>Remaining</div>
+                  <div><b id="calcOnceOffRemaining">R0.00</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="background-color: #f6f6f6;" class="mb-1 mt-1">
+            <b>Previously used</b> (Budget for 2)
+          </div>
+
+          <!-- Beneficiary List -->
+          <div id="beneficiaryListContainer-onceoff">
+
+          </div>
+
+          <button class="capi-button-clear mt-1" id="onceoffAddBeneButton" onclick="goToAddBeneficiary('#P_ONCEOFF')">
+            Save preference
+          </button>
+
+          <div id="beneficiaryQuickListContainer-onceoff" style="display: none;">
+            <div style="background-color: #f6f6f6;" class="mb-1 mt-1">
+              <b>Previously used Pro</b>
+            </div>
+
+            <!-- Beneficiary List Existing -->
+            <div id="beneficiaryListContainer-onceoff-quick-select">
+
+            </div>
+          </div>
+
+          <button class="capi-button mt-1" style="display: none;" id="onceoffNextButton" onclick="goToPage('DONE')">
+            Confirm bookings for all parties with your credit card payment
+          </button>
+        </div>
+
+        <!-- Adhoc ADD -->
+        <div id="P_ADDBENE" class="pageBlock">
+          <div style="background-color: #FFF; min-height: 500px;">
+            <div class="pageTitle">
+              <span class="pageTitle-back" onclick="beneficiariesGoBack()">&#60;</span>
+              <span>Create a service</span>
+              <span class="pageTitle-clear">></span>
+            </div>
+            <div class="pageBox">
+              <br>
+              <span class="mt-1">
+                <label class="field-label">Category</label>
+                <select id="newBeneRelationship" class="field" style="width: 380px;">
+                  <option value="Spouse">Cleaning - Municipal </option>
+                  <option value="Parent">Logisitics</option>
+                  <option value="Child">Education</option>
+                  <option value="Sibling">Blue Collar</option>
+                  <option value="Grandparent">Food - Substance</option>
+                </select>
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Give your service a name</label>
+                <input id="newBeneFirstname" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Suburb</label>
+                <input id="newBeneLastname" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Location string</label>
+                <input id="newBeneIDNumber" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Image URL</label>
+                <input id="newBeneDateOfBirth" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Cellphone Number</label>
+                <input id="newBeneCelphoneNumber" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Email Address</label>
+                <input id="newBeneEmailAddress" class="field" />
+              </span>
+            </div>
+          </div>
+          <button class="capi-button mt-1" onclick="submitAddBeneficiaryForm()">
+            Save
+          </button>
+        </div>
+
+        <!-- Adhoc EDIT BENE -->
+        <div id="P_EDITBENE" class="pageBlock">
+          <div style="background-color: #FFF; min-height: 500px;">
+            <div class="pageTitle">
+              <span class="pageTitle-back" onclick="editBeneBackClick()">&#60;</span>
+              <span>UDPATE BENEFICIARY</span>
+              <span class="pageTitle-back" onclick="removeBeneficiaryPermanent()">x</span>
+            </div>
+            <div class="pageBox">
+              <br>
+              <span class="mt-1">
+                <label class="field-label">Relationship</label>
+                <select id="editBeneRelationship" class="field" style="width: 380px;">
+                  <option value="Spouse">Spouse</option>
+                  <option value="Parent">Parent</option>
+                  <option value="Child">Child</option>
+                  <option value="Sibling">Sibling</option>
+                  <option value="Grandparent">Grandparent</option>
+                </select>
+              </span>
+              <span class="mt-1">
+                <label class="field-label">First name</label>
+                <input id="editBeneFirstname" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Lastname</label>
+                <input id="editBeneLastname" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">ID Number</label>
+                <input id="editBeneIDNumber" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Date of Birth</label>
+                <input id="editBeneDateOfBirth" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Cellphone Number</label>
+                <input id="editBeneCelphoneNumber" class="field" />
+              </span>
+              <span class="mt-1">
+                <label class="field-label">Email Address</label>
+                <input id="editBeneEmailAddress" class="field" />
+              </span>
+            </div>
+          </div>
+          <button class="capi-button mt-1" onclick="submitEditBeneficiaryForm()">
+            UPDATE BENEFICIARY
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <canvas id="confettiCanvas" width="1919" height="552" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 1000; pointer-events: none;"></canvas>
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+
+</html>

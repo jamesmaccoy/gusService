@@ -1,0 +1,157 @@
+/* Layout */
+
+body {
+    background-color: #f6f6f6;
+    font-family: "Hind Vadodara";
+  }
+  
+  .p-1 {
+    padding: 10px;
+  }
+  
+  .mt-1 {
+    margin-top: 10px;
+  }
+  
+  .mb-1 {
+    margin-bottom: 10px;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  /* Pages */
+  
+  .pageTitle {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #e4e4e4;
+    color: #969494;
+  }
+  
+  .pageTitle-back {
+    cursor: pointer;
+  }
+  
+  .pageTitle-clear {
+    visibility: hidden;
+  }
+  
+  .pageBlock {
+    display: none;
+  }
+  
+  .pageBox {
+    padding-right: 16px;
+    padding-left: 10px;
+  }
+  
+  /* Buttons */
+  .capi-button {
+    background-color: #60AD7F;
+    border-radius: 5px;
+    color: #FFF;
+    width: 100%;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+  }
+  
+  .capi-button:hover {
+    background-color: #60AD7F;
+  }
+  
+  .capi-button:disabled {
+    background-color: grey;
+  }
+  
+  .capi-button-clear {
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    border: 1px dashed #60AD7F;
+    color: #60AD7F;
+    width: 100%;
+    padding: 15px 20px;
+    cursor: pointer;
+  }
+  
+  /* Inputs */
+  
+  .field-label {
+    font-size: 14px;
+    position: relative;
+  }
+  
+  .field {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #dadada;
+    text-indent: 10px;
+  }
+  
+  /* Cards */
+  
+  .beneficiaryCard {
+    background-color: #FFF;
+    margin-bottom: 10px;
+  }
+  
+  .beneficiaryCard-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+  }
+  
+  .beneficiaryCard-info-avatar-row {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+  
+  .beneficiaryCard-info-avatar {
+    height: 35px;
+    width: 35px;
+    background-color: rgb(10, 10, 99);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    margin-right: 10px;
+  }
+  
+  .beneficiaryCard-info-details-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .beneficiaryCard-values {
+    padding: 10px;
+    padding-right: 25px;
+  }
+  
+  .beneficiaryCard-values-input {
+    text-align: right;
+    padding-right: 10px;
+    font-weight: bold;
+  }
+  
+  .beneficiaryCard-values-hint {
+    color: rgb(160, 160, 160);
+    padding-top: 10px;
+    font-size: 14px;
+  }
+  
+  /* List container for Monthly */
+  #beneficiaryListContainer-monthly {}
+  
